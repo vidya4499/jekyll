@@ -1,0 +1,30 @@
+package: jekyll-site
+version: 1.0.0
+targets:
+  ubuntu:
+    versions:
+      - 22.04
+
+dependencies:
+  build:
+    - ruby-full
+    - build-essential
+    - zlib1g-dev
+  runtime:
+    - ruby
+    - bundler
+
+build:
+  script:
+    - gem install bundler jekyll
+    - bundle install
+    - bundle exec jekyll build
+
+run:
+  script: |
+    cd /opt/jekyll-site
+    bundle exec jekyll serve --host 0.0.0.0 --port 4000
+  user: jekyll
+  working_directory: /opt/jekyll-site
+  environment:
+    - JEKYLL_ENV=production
